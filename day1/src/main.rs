@@ -1,47 +1,34 @@
 use std::fs;
-use std::collections::HashMap;
 
-pub fn find_occurence(map: HashMap<i32, i32>, size: i32) -> i32 {
-    let mut tmp = 0;
+const FILE_PATH: &str = "day1.txt";
+
+pub fn find_occurence(map: Vec<i32>, lenth: usize) -> i32 {
     let mut res = 0;
-    while tmp != size {
-        if map[&tmp] == map[&0] {
-            tmp += 1;
-            continue
-        } else if map[&tmp] > map[&(tmp - 1)] {
+    for n in 0..lenth {
+        if map[n] != map[0] && map[n] > map[n-1] {
             res += 1;
         }
-        tmp += 1;
     }
     res
 }
 
 fn main() {
-    let file_content = fs::read_to_string("day1.txt").unwrap();
-    let lines: Vec<String> = file_content.split('\n')
-        .map(|s: &str| s.to_string())
+    let file_content: Vec<i32> = fs::read_to_string(FILE_PATH)
+        .unwrap()
+        .split('\n')
+        .filter_map(|str| str.parse().ok())
         .collect();
-    let mut tab: HashMap<i32, i32> = HashMap::new();
-    let mut count = 0;
-    for line in lines {
-        tab.insert(count, line.parse().unwrap());
-        count += 1;
-    }
+
     //part 1
-    let res: i32 = find_occurence(tab.clone(), count);
+    let res: i32 = find_occurence(file_content.clone(), file_content.len());
     println!("part one: {}", res);
 
     // part 2
-    let mut tmp = 2;
-    let mut tab_of_3: HashMap<i32, i32> = HashMap::new();
-    let mut cmp = 0;
-
-    while tmp != count {
-        let add = tab[&tmp] + tab[&(tmp - 1)] + tab[&(tmp - 2)];
-        tab_of_3.insert(cmp, add);
-        tmp += 1;
-        cmp += 1;
+    let mut vec: Vec<i32> = Vec::new();
+    for tmp in 2..file_content.len() {
+        let add = file_content[tmp] + file_content[tmp - 1] + file_content[tmp - 2];
+        vec.push(add);
     }
-    let res: i32 = find_occurence(tab_of_3.clone(), cmp);
+    let res: i32 = find_occurence(vec.clone(), vec.len());
     println!("part two: {}", res);
 }
