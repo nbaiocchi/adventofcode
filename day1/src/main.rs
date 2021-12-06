@@ -8,10 +8,8 @@ pub fn find_occurence(map: HashMap<i32, i32>, size: i32) -> i32 {
         if map[&tmp] == map[&0] {
             tmp += 1;
             continue
-        } else {
-            if map[&tmp] > map[&(tmp - 1)] {
-                res += 1;
-            }
+        } else if map[&tmp] > map[&(tmp - 1)] {
+            res += 1;
         }
         tmp += 1;
     }
@@ -20,7 +18,7 @@ pub fn find_occurence(map: HashMap<i32, i32>, size: i32) -> i32 {
 
 fn main() {
     let file_content = fs::read_to_string("day1.txt").unwrap();
-    let lines: Vec<String> = file_content.split("\n")
+    let lines: Vec<String> = file_content.split('\n')
         .map(|s: &str| s.to_string())
         .collect();
     let mut tab: HashMap<i32, i32> = HashMap::new();
