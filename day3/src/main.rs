@@ -30,7 +30,7 @@ fn first_part(vec: &[Vec<u32>]) {
     }
     let gamma = u32::from_str_radix(&first, 2).unwrap();
     let epsilon = u32::from_str_radix(&second, 2).unwrap();
-    println!("gamma: {} = {} --- epsilon: {} = {} --- power consuption: {}", first, gamma, second, epsilon, gamma * epsilon);
+    println!("gamma: {} = {} --- epsilon: {} = {} --- power: {}", first, gamma, second, epsilon, gamma * epsilon);
 }
 
 fn main() {
